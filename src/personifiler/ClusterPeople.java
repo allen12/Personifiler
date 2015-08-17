@@ -51,7 +51,7 @@ public class ClusterPeople
 	 * 
 	 * @return
 	 */
-	public Map<String, Integer> cluster()
+	private void cluster()
 	{
 		System.out.println("STARTING CLUSTERING");
 		int n = matrix.length;
@@ -143,12 +143,19 @@ public class ClusterPeople
 		}
 		
 		this.map = map;
-		return map;
-		
 	}
 	
+	/**
+	 * Determines the rand index of the clustered group of people versus
+	 * the ground truth group of people.
+	 * 
+	 * @return
+	 */
 	public double randIndex()
 	{
+		if (map == null)
+			cluster();
+		
 		System.out.println("Determining the cluster. Size = " + map.size());
 		Cluster<String> one = getCluster(map);
 		
@@ -158,7 +165,7 @@ public class ClusterPeople
 		return RandIndex.getRandIndex(one, two);
 	}
 	
-	public static Cluster<String> getCluster(Map<String, Integer> map)
+	private static Cluster<String> getCluster(Map<String, Integer> map)
 	{
 		List<Pair<String>> samePairs = new ArrayList<>();
 		List<Pair<String>> differentPairs = new ArrayList<>();
@@ -230,7 +237,7 @@ public class ClusterPeople
 		return new Cluster<String>(samePairs, differentPairs);	
 	}
 	
-	public double getCosineDistance(double[] vector1, double[] vector2)
+	private double getCosineDistance(double[] vector1, double[] vector2)
 	{
 		double dotProduct = 0.0;
 		for (int i = 0; i < vector1.length; i++)
