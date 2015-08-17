@@ -18,7 +18,7 @@ public class ClusterPeople
 	
 	public ClusterPeople(Map<String, double[]> featureMatrix) 
 	{
-		matrix = new PersonMatrix[map.size()];
+		matrix = new PersonMatrix[featureMatrix.size()];
 		
 		Iterator<Map.Entry<String, double[]>> iterator = featureMatrix.entrySet().iterator();
 		

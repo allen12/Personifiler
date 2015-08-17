@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class GroundTruth 
 {
-	private static final String EMPLOYEE_FILE = "people_locator_with521.txt";
+	private static final String EMPLOYEE_FILE = "data/people_locator_with521.txt";
 	private static final List<Person> list = generateList();
 	
 	private static List<Person> generateList()
