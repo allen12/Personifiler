@@ -53,7 +53,7 @@ public abstract class FeatureMatrix
 		{
 			
 			r.readLine(); // First line is useless
-			r.readLine();
+			r.readLine(); // Second line also useless
 			
 			while (r.ready())
 			{

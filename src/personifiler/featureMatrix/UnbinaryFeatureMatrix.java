@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import personifiler.cluster.ClusterPeople;
-
 /**
  * 
  * <p> An unbinary feature matrix represents a connection between file owners.
@@ -166,19 +164,5 @@ public class UnbinaryFeatureMatrix extends FeatureMatrix
 		}
 		
 		return s;
-	}
-	
-	public static void main(String[] args)
-	{
-		UnbinaryFeatureMatrix b = new UnbinaryFeatureMatrix();
-		
-		b.readFile(new File("C:\\temp\\file-lists\\2014-12-19-14-54-31_VLF_Analysis.txt"));
-		b.calculateFeatureMatrix();
-		
-		System.out.println(b);
-		
-		ClusterPeople c = new ClusterPeople(b.featureMatrix);
-		
-		System.out.println(c.randIndex());
 	}
 }
