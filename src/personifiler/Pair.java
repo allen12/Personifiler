@@ -19,6 +19,7 @@ public class Pair<T>
 		if (other instanceof Pair<?> == false)
 			return false;
 		
+		@SuppressWarnings("unchecked") //safe cast
 		Pair<T> p = (Pair<T>) other;
 		
 		if ((first.equals(p.first) && second.equals(p.second)) || (first.equals(p.second) && second.equals(p.first)))

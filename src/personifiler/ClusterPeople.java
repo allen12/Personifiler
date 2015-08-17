@@ -79,12 +79,6 @@ public class ClusterPeople
 		{
 			groups[i] = new Group(new ArrayList<PersonMatrix>(
 				    Arrays.asList(matrix[randomIndecies[i]])), matrix[randomIndecies[i]].matrix);
-			
-			double[] mean = groups[i].mean;
-//			System.out.print("Group " + i + "'s initial mean is {");
-//			for (double d: mean)
-//				System.out.print(d + " ");
-//			System.out.println("}");
 		}
 		//---------------------------------------------------------------------------------------------------------
 
@@ -156,19 +150,18 @@ public class ClusterPeople
 	public double randIndex()
 	{
 		System.out.println("Determining the cluster. Size = " + map.size());
-		Cluster one = getCluster(map);
+		Cluster<String> one = getCluster(map);
 		
 		System.out.println("Determining the ground truth cluster");
-		Cluster two = RandIndex.getCluster(RandIndex.getGroundTruthCluster(map.keySet()));
-		
+		Cluster<String> two = transformIntoCluster(Cluster.getGroundTruthCluster(map.keySet()));
 		
 		return RandIndex.getRandIndex(one, two);
 	}
 	
-	public static Cluster getCluster(Map<String, Integer> map)
+	public static Cluster<String> getCluster(Map<String, Integer> map)
 	{
-		List<Pair> samePairs = new ArrayList<>();
-		List<Pair> differentPairs = new ArrayList<>();
+		List<Pair<String>> samePairs = new ArrayList<>();
+		List<Pair<String>> differentPairs = new ArrayList<>();
 		
 		Iterator<Map.Entry<String, Integer>> outer = map.entrySet().iterator();
 		
@@ -193,16 +186,48 @@ public class ClusterPeople
 				
 				if (innerEntry.getValue().equals(outerEntry.getValue()))
 				{
-					samePairs.add(new Pair(outerEntry.getKey(), innerEntry.getKey()));
+					samePairs.add(new Pair<String>(outerEntry.getKey(), innerEntry.getKey()));
 				}
 				else
 				{
-					differentPairs.add(new Pair(outerEntry.getKey(), innerEntry.getKey()));
+					differentPairs.add(new Pair<String>(outerEntry.getKey(), innerEntry.getKey()));
 				}
 			}
 		}
 		
-		return new Cluster(samePairs, differentPairs);	
+		return new Cluster<String>(samePairs, differentPairs);	
+	}
+	
+	// Keys of input map are people's names, values the people's groups
+	// Expected result is a Cluster object
+	// samePairs consists of Pairs with people in the same group
+	// differentPairs consists of Pairs with people in different groups
+	private static Cluster<String> transformIntoCluster(Map<String, String> map)
+	{
+		List<Pair<String>> samePairs = new ArrayList<>();
+		List<Pair<String>> differentPairs = new ArrayList<>();
+
+		List<String> names = new ArrayList<>(map.keySet());
+		List<String> groups = new ArrayList<>(map.values());
+
+		try
+		{
+			for (int i = 0; i < names.size(); i++)
+			{
+				for (int j = i+1; j < names.size(); j++)
+				{
+					if (groups.get(i).equals(groups.get(j)))
+						samePairs.add(new Pair<String>(names.get(i), names.get(j)));
+					else
+						samePairs.add(new Pair<String>(names.get(i), names.get(j)));
+				}
+			}
+		} catch (Exception e) 
+		{
+			throw new PersonifilerException(e);
+		}
+
+		return new Cluster<String>(samePairs, differentPairs);	
 	}
 	
 	public double getCosineDistance(double[] vector1, double[] vector2)
