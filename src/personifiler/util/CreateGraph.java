@@ -128,7 +128,6 @@ public class CreateGraph
 		randIndex.setProperty("type", "rand index");
 		
 		double r = c.randIndex(); 
-		System.out.println("Rand index: " + r);
 		
 		randIndex.setProperty("rand", Double.toString(r));
 	}

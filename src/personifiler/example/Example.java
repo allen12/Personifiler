@@ -19,8 +19,6 @@ public class Example
 		// Ingest the data into a feature matrix
 		FeatureMatrix matrix = new BinaryFeatureMatrix();
 		matrix.readFile(new File("data/file-lists/combined1.txt"));
-		
-		// Calculate the feature matrix
 		matrix.calculateFeatureMatrix();
 		
 		// Create a ClusterPeople object, used to perform the clustering

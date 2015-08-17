@@ -55,11 +55,8 @@ public class ClusterPeople
 	 */
 	private void cluster()
 	{
-		System.out.println("STARTING CLUSTERING");
 		int n = matrix.length;
 		int k = (int)Math.ceil(Math.sqrt(n / 2.0));
-		System.out.println("n = " + n);
-		System.out.println("k = " + k);
 		
 		//---------------------------------------Initialize random centroids---------------------------------------
 		Group[] groups = new Group[k];
@@ -88,7 +85,7 @@ public class ClusterPeople
 		
 		for (int a = 0; a < 25; a++)
 		{
-			System.out.println("Iteration " + a);
+//			System.out.println("Iteration " + a);
 			//Assign each person to a centroid based on the closest cosine distance
 			Group[] temp = groups.clone();
 			for (PersonMatrix person: matrix)
@@ -96,20 +93,20 @@ public class ClusterPeople
 				//Find closest centroid
 				double largestDistance = getCosineDistance(person.getMatrix(), temp[0].getMean());
 				Group maxGroup = temp[0];
-				int groupNum = 0;
+//				int groupNum = 0;
 				for (int i = 0; i < temp.length; i++)
 				{
 					double distance = getCosineDistance(person.getMatrix(), temp[i].getMean());
-					System.out.println("Person " + person.getName() + " has a distance of " + distance + " to group " + i);
+//					System.out.println("Person " + person.getName() + " has a distance of " + distance + " to group " + i);
 					if (distance > largestDistance)
 					{
 						largestDistance = distance;
 						maxGroup = temp[i];
-						groupNum = i;
+//						groupNum = i;
 					}
 				}
 				
-				System.out.println("Person " + person.getName() + " is closest to group " + groupNum);
+//				System.out.println("Person " + person.getName() + " is closest to group " + groupNum);
 				maxGroup.getMembers().add(person);
 			}
 			
@@ -158,10 +155,10 @@ public class ClusterPeople
 		if (map == null)
 			cluster();
 		
-		System.out.println("Determining the cluster. Size = " + map.size());
+//		System.out.println("Determining the cluster. Size = " + map.size());
 		Cluster<String> one = Cluster.transformIntoCluster(map);
 		
-		System.out.println("Determining the ground truth cluster");
+//		System.out.println("Determining the ground truth cluster");
 		Cluster<String> two = Cluster.transformIntoCluster(GroundTruth.getGroundTruthCluster(map.keySet()));
 		
 		return RandIndex.getRandIndex(one, two);
