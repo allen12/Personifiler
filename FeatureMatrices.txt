@@ -1,0 +1,6 @@
+Albin, Alison Cover, {1.0 1.0 1.0 1.0 1.0 1.0 }
+Hamer, Stephen Thomas, {1.0 1.0 1.0 1.0 1.0 1.0 }
+Kelly, Liam Patrick, {1.0 1.0 1.0 1.0 1.0 0.0 }
+Piotrowski, James Francis, {1.0 1.0 1.0 1.0 1.0 0.0 }
+Siva, Anand , {1.0 1.0 1.0 1.0 1.0 0.0 }
+Stamps, Barbara Godwin, {1.0 1.0 0.0 0.0 0.0 1.0 }

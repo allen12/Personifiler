@@ -1,0 +1,13 @@
+File name			Owner Name
+=======================================================
+\\dom1\aos\AOSShare\Projects and Studies\NTC			Dunne, Jeffrey Adam,
+\\dom1\aos\AOSShare\Projects and Studies\NTC\NTC Data VM Disk 1			Dunne, Jeffrey Adam,
+\\dom1\aos\AOSShare\Projects and Studies\NTC\NTC Data VM Disk 1\readme.txt			Dunne, Jeffrey Adam,
+\\dom1\aos\AOSShare\Projects and Studies\NTC\NTC Data VM Disk 1\ntc_data_dev_vm_1-3-0-4-alapha.gz_aa			Dunne, Jeffrey Adam,
+\\dom1\aos\AOSShare\Projects and Studies\NTC\NTC Data VM Disk 2			Dunne, Jeffrey Adam,
+\\dom1\aos\AOSShare\Projects and Studies\NTC\NTC Data VM Disk 2\ntc_data_dev_vm_1-3-0-4-alapha.gz_ab			Dunne, Jeffrey Adam,
+\\dom1\aos\AOSShare\Projects and Studies\NTC\NTC Web VM Disk 2			Dunne, Jeffrey Adam,
+\\dom1\aos\AOSShare\Projects and Studies\NTC\NTC Web VM Disk 2\ntc_web_dev_vm_1-3-0-4-alapha.gz_ab			Dunne, Jeffrey Adam,
+\\dom1\aos\AOSShare\Projects and Studies\NTC\NTC Web VM Disk 1			Dunne, Jeffrey Adam,
+\\dom1\aos\AOSShare\Projects and Studies\NTC\NTC Web VM Disk 1\readme.txt			Dunne, Jeffrey Adam,
+\\dom1\aos\AOSShare\Projects and Studies\NTC\NTC Web VM Disk 1\ntc_web_dev_vm_1-3-0-4-alapha.gz_aa			Dunne, Jeffrey Adam,
