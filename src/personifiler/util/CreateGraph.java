@@ -41,24 +41,6 @@ public class CreateGraph
 	
 	private List<Person> groundTruth = GroundTruth.getList();
 	
-	/**
-	 * 
-	 * @param txtFile The text file to ingest data from
-	 */
-	public CreateGraph(final String in, final String out)
-	{
-		b = new BinaryFeatureMatrix();
-		b.readFile(new File(in));
-		b.calculateFeatureMatrix();
-		c = new ClusterPeople(b.getFeatureMatrix());
-
-		addNodes();
-		addClusters();
-		addEdges();
-		
-		createGML(out);
-	}
-	
 	public CreateGraph(FeatureMatrix b, ClusterPeople c)
 	{
 		this.b = b;
