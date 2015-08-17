@@ -1,4 +1,4 @@
-package finalVersion2;
+package personifiler;
 
 import java.io.File;
 import java.util.Iterator;

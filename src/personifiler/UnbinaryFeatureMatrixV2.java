@@ -1,4 +1,4 @@
-package finalVersion2;
+package personifiler;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,11 +17,11 @@ import java.util.TreeSet;
  * @author chenga1
  *
  */
-public class BinaryFeatureMatrixV2 extends FeatureMatrix
+public class UnbinaryFeatureMatrixV2 extends FeatureMatrix
 {
 	
 	// Sorted list of owners
-	private String[] sortedOwners;
+	String[] sortedOwners;
 	
 	public void calculateFeatureMatrix()
 	{
@@ -60,7 +60,7 @@ public class BinaryFeatureMatrixV2 extends FeatureMatrix
 				{
 					int index = find(sortedOwners, owner2);
 					
-					ownerVector[index] = 1.0;
+					ownerVector[index] += 1.0;
 					
 				}
 				
@@ -161,7 +161,7 @@ public class BinaryFeatureMatrixV2 extends FeatureMatrix
 	
 	public static void main(String[] args)
 	{
-		BinaryFeatureMatrixV2 b = new BinaryFeatureMatrixV2();
+		UnbinaryFeatureMatrixV2 b = new UnbinaryFeatureMatrixV2();
 		
 		b.readFile(new File("C:\\temp\\file-lists\\2014-12-19-14-54-31_VLF_Analysis.txt"));
 		b.calculateFeatureMatrix();
