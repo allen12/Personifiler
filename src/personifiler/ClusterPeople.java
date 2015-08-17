@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -157,85 +156,14 @@ public class ClusterPeople
 			cluster();
 		
 		System.out.println("Determining the cluster. Size = " + map.size());
-		Cluster<String> one = getCluster(map);
+		Cluster<String> one = Cluster.transformIntoCluster(map);
 		
 		System.out.println("Determining the ground truth cluster");
-		Cluster<String> two = transformIntoCluster(Cluster.getGroundTruthCluster(map.keySet()));
+		Cluster<String> two = Cluster.transformIntoCluster(Cluster.getGroundTruthCluster(map.keySet()));
 		
 		return RandIndex.getRandIndex(one, two);
 	}
 	
-	private static Cluster<String> getCluster(Map<String, Integer> map)
-	{
-		List<Pair<String>> samePairs = new ArrayList<>();
-		List<Pair<String>> differentPairs = new ArrayList<>();
-		
-		Iterator<Map.Entry<String, Integer>> outer = map.entrySet().iterator();
-		
-		while (outer.hasNext())
-		{
-			Iterator<Map.Entry<String, Integer>> inner = map.entrySet().iterator();
-			Map.Entry<String, Integer> outerEntry = outer.next();
-			
-			// Advance the inner iterator to  the outer iterator
-			while (inner.hasNext())
-			{
-				Map.Entry<String, Integer> innerEntry = inner.next();
-				if (innerEntry.getKey().equals(outerEntry.getKey()))
-				{
-					break;
-				}
-			}
-			
-			while (inner.hasNext())
-			{
-				Map.Entry<String, Integer> innerEntry = (Map.Entry<String, Integer>)inner.next();
-				
-				if (innerEntry.getValue().equals(outerEntry.getValue()))
-				{
-					samePairs.add(new Pair<String>(outerEntry.getKey(), innerEntry.getKey()));
-				}
-				else
-				{
-					differentPairs.add(new Pair<String>(outerEntry.getKey(), innerEntry.getKey()));
-				}
-			}
-		}
-		
-		return new Cluster<String>(samePairs, differentPairs);	
-	}
-	
-	// Keys of input map are people's names, values the people's groups
-	// Expected result is a Cluster object
-	// samePairs consists of Pairs with people in the same group
-	// differentPairs consists of Pairs with people in different groups
-	private static Cluster<String> transformIntoCluster(Map<String, String> map)
-	{
-		List<Pair<String>> samePairs = new ArrayList<>();
-		List<Pair<String>> differentPairs = new ArrayList<>();
-
-		List<String> names = new ArrayList<>(map.keySet());
-		List<String> groups = new ArrayList<>(map.values());
-
-		try
-		{
-			for (int i = 0; i < names.size(); i++)
-			{
-				for (int j = i+1; j < names.size(); j++)
-				{
-					if (groups.get(i).equals(groups.get(j)))
-						samePairs.add(new Pair<String>(names.get(i), names.get(j)));
-					else
-						samePairs.add(new Pair<String>(names.get(i), names.get(j)));
-				}
-			}
-		} catch (Exception e) 
-		{
-			throw new PersonifilerException(e);
-		}
-
-		return new Cluster<String>(samePairs, differentPairs);	
-	}
 	
 	private double getCosineDistance(double[] vector1, double[] vector2)
 	{
