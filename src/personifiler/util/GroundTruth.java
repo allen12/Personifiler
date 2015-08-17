@@ -12,13 +12,14 @@ import java.util.Map;
 
 public class GroundTruth 
 {
-	private static List<Person> list = generateList();
+	private static final String EMPLOYEE_FILE = "people_locator_with521.txt";
+	private static final List<Person> list = generateList();
 	
 	private static List<Person> generateList()
 	{
 		List<Person> people = new ArrayList<Person>();
 
-		try (BufferedReader b = new BufferedReader(new FileReader(new File("people_locator_with521.txt"))) )
+		try (BufferedReader b = new BufferedReader(new FileReader(new File(EMPLOYEE_FILE))) )
 		{
 			b.readLine();
 
