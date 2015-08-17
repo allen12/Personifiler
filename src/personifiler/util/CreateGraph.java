@@ -59,6 +59,16 @@ public class CreateGraph
 		createGML(out);
 	}
 	
+	public CreateGraph(FeatureMatrix b, ClusterPeople c)
+	{
+		this.b = b;
+		this.c = c;
+		
+		addNodes();
+		addClusters();
+		addEdges();
+	}
+	
 	private void addEdges()
 	{
 		edges = new Edge[people.length];
