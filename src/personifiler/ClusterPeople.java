@@ -11,18 +11,18 @@ import java.util.Random;
 
 public class ClusterPeople 
 {
-	PersonMatrix[] matrix;
-	Map<String, Integer> map; //Clustered map, call cluster()
+	private PersonMatrix[] matrix;
+	private Map<String, Integer> map; //Clustered map, call cluster()
 	
 	public ClusterPeople(Map<String, double[]> map) //size is the number of people to cluster
 	{
 		matrix = new PersonMatrix[map.size()];
 		
-		Iterator iterator = map.entrySet().iterator();
+		Iterator<Map.Entry<String, double[]>> iterator = map.entrySet().iterator();
 		
 		for (int i = 0; i < matrix.length; i++)
 		{
-			Map.Entry<String, double[]> entry = (Map.Entry)iterator.next();
+			Map.Entry<String, double[]> entry = iterator.next();
 			
 			matrix[i] = new PersonMatrix(entry.getKey(), entry.getValue());
 		}
@@ -30,13 +30,27 @@ public class ClusterPeople
 		cluster();
 	}
 	
+	/**
+	 * Returns a clustered list of people.
+	 * Key is the person's name, Value is an arbitrary integer denoting the group they belong in
+	 * @return
+	 */
 	public Map<String, Integer> getClusteredMap()
 	{
+		if (map == null)
+			cluster();
+		
 		return map;
 	}
-	
-	//Use k means clustering with cosine distance.
-	//Uses k = ceiling(sqrt(n/2))
+
+	/**
+	 * Clusters using k-means.
+	 * Distance measure is cosine distance.
+	 * 
+	 * Uses k = Math.ceil(sqrt(n/2))
+	 * 
+	 * @return
+	 */
 	public Map<String, Integer> cluster()
 	{
 		System.out.println("STARTING CLUSTERING");
@@ -74,7 +88,7 @@ public class ClusterPeople
 		}
 		//---------------------------------------------------------------------------------------------------------
 
-		//--------------------Repeat clustering for 500 times------------------------------
+		//-------------------- Repeat clustering for 25 times ------------------------------
 		
 		for (int a = 0; a < 25; a++)
 		{
@@ -142,7 +156,8 @@ public class ClusterPeople
 	public double randIndex()
 	{
 		System.out.println("Determining the cluster. Size = " + map.size());
-		Cluster one =getCluster(map);
+		Cluster one = getCluster(map);
+		
 		System.out.println("Determining the ground truth cluster");
 		Cluster two = RandIndex.getCluster(RandIndex.getGroundTruthCluster(map.keySet()));
 		
@@ -152,20 +167,20 @@ public class ClusterPeople
 	
 	public static Cluster getCluster(Map<String, Integer> map)
 	{
-		List<Pair> samePairs = new ArrayList<Pair>();
-		List<Pair> differentPairs = new ArrayList<Pair>();
+		List<Pair> samePairs = new ArrayList<>();
+		List<Pair> differentPairs = new ArrayList<>();
 		
-		Iterator outer = map.entrySet().iterator();
+		Iterator<Map.Entry<String, Integer>> outer = map.entrySet().iterator();
 		
 		while (outer.hasNext())
 		{
-			Iterator inner = map.entrySet().iterator();
-			Map.Entry<String, Integer> outerEntry = (Map.Entry<String, Integer>)outer.next();
+			Iterator<Map.Entry<String, Integer>> inner = map.entrySet().iterator();
+			Map.Entry<String, Integer> outerEntry = outer.next();
 			
 			// Advance the inner iterator to  the outer iterator
 			while (inner.hasNext())
 			{
-				Map.Entry<String, Integer> innerEntry = (Map.Entry<String, Integer>)inner.next();
+				Map.Entry<String, Integer> innerEntry = inner.next();
 				if (innerEntry.getKey().equals(outerEntry.getKey()))
 				{
 					break;
@@ -178,12 +193,10 @@ public class ClusterPeople
 				
 				if (innerEntry.getValue().equals(outerEntry.getValue()))
 				{
-//					System.out.println("Same pair");
 					samePairs.add(new Pair(outerEntry.getKey(), innerEntry.getKey()));
 				}
 				else
 				{
-//					System.out.println("Different pair");
 					differentPairs.add(new Pair(outerEntry.getKey(), innerEntry.getKey()));
 				}
 			}

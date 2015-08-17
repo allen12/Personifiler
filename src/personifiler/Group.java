@@ -1,6 +1,13 @@
 package personifiler;
 
 import java.util.ArrayList;
+
+/**
+ * Helper class for clustering.
+ * 
+ * @author Allen Cheng
+ *
+ */
 public class Group
 {
 	ArrayList<PersonMatrix> members;

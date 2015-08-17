@@ -1,19 +1,25 @@
 package personifiler;
 
-public class Pair 
+public class Pair<T>
 {
-	Object first;
-	Object second;
+	private T first;
+	private T second;
 	
-	public Pair(Object f, Object s)
+	public Pair(T f, T s)
 	{
 		first = f; second = s;
 	}
 	
-	//Two pairs are equal if both objects of one pair matches both objects of the second pair
+	/**
+	 * Two pairs are equal if both objects of one pair matches both objects of the second pair.
+	 * Order does not matter.
+	 */
 	public boolean equals(Object other)
 	{
-		Pair p = (Pair)other;
+		if (other instanceof Pair<?> == false)
+			return false;
+		
+		Pair<T> p = (Pair<T>) other;
 		
 		if ((first.equals(p.first) && second.equals(p.second)) || (first.equals(p.second) && second.equals(p.first)))
 			return true;

@@ -1,6 +1,5 @@
 package personifiler;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,7 +14,6 @@ public class GroundTruth
 	private static List<Person> generateList()
 	{
 		List<Person> people = new ArrayList<Person>();
-
 
 		try (BufferedReader b = new BufferedReader(new FileReader(new File("people_locator_with521.txt"))) )
 		{
@@ -92,7 +90,7 @@ public class GroundTruth
 		return people;
 	}
 	
-	//Get a list of the ground truth people
+	// Get a list of the ground truth people
 	public static List<Person> getList()
 	{
 		return list;

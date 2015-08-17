@@ -1,10 +1,4 @@
 package personifiler;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.FileOwnerAttributeView;
-import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -105,78 +99,5 @@ public class RandIndex
 		return map;
 	}
 
-	//Get a list of all the owners of a file list
-	public static List<Person> getListOfOwners(List<File> files)
-	{
-		List<String> listIDs = new ArrayList<String>();
-		List<Person> listPeople = new ArrayList<Person>();
-		List<Person> fullList = GroundTruth.getList();
 
-		for (File f: files)
-		{
-			String ID = getFileOwnerID(f);
-			if (!listIDs.contains(ID))
-				listIDs.add(ID);
-		}
-
-
-		for (String ID: listIDs)
-		{
-			for (Person p: fullList)
-			{
-				if (p.getID().equals(ID))
-				{
-					listPeople.add(p);
-					break;
-				}
-			}
-		}
-
-		return listPeople;
-	}
-
-	public static List<File> getFiles(File[] files)
-	{
-		List<File> allFiles = new ArrayList<File>();
-
-		for (File f: files)
-		{
-			if (f.isDirectory() )
-				allFiles.addAll(getFiles(f.listFiles()));
-			else
-				allFiles.add(f);
-		}
-
-		return allFiles;
-	}
-
-	public static String getFileOwnerID(File file)
-	{
-		String ownerID = "";
-
-		try
-		{
-			String directory = file.getAbsolutePath();
-			Path path = Paths.get(directory);
-			FileOwnerAttributeView ownerAttributeView = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
-			UserPrincipal owner = ownerAttributeView.getOwner();
-			ownerID = owner.getName();
-
-			char[] array = ownerID.toCharArray();
-			int index = 0;
-			for (int i = index; i < array.length; i++)
-				if (array[i] == '\\')
-				{
-					index = i; break;
-				}
-			//TOUCHJE1
-			ownerID = ownerID.substring(index+1);
-			
-		} catch(Exception e)
-		{
-			ownerID = "Unable to get the owner";
-		}
-
-		return ownerID;
-	}
 }

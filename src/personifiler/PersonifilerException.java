@@ -1,5 +1,6 @@
 package personifiler;
 
+@SuppressWarnings("serial")
 public class PersonifilerException extends RuntimeException
 {
 
