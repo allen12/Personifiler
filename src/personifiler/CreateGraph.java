@@ -91,9 +91,9 @@ public class CreateGraph
 			
 			String group = "";
 			for (Person p: groundTruth)
-				if (p.name.equals(allP[i]))
+				if (p.getName().equals(allP[i]))
 				{
-					group = p.group;
+					group = p.getGroup();
 					break;
 				}
 			
@@ -128,9 +128,9 @@ public class CreateGraph
 				String owner = entry.getKey();
 				for (Person p: groundTruth)
 				{
-					if (owner.equals(p.name))
+					if (owner.equals(p.getName()))
 					{
-						writer2.write(owner + "\t\t" + p.group);
+						writer2.write(owner + "\t\t" + p.getGroup());
 						writer2.newLine();
 						break;
 					}
@@ -142,9 +142,9 @@ public class CreateGraph
 			writer2.flush();
 			writer2.close();
 			
-		} catch (IOException e) {
-			
-			e.printStackTrace();
+		} catch (IOException e) 
+		{
+			throw new PersonifilerException(e);
 		}
 		
 		try {

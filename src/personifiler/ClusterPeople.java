@@ -144,10 +144,10 @@ public class ClusterPeople
 		System.out.println("Determining the cluster. Size = " + map.size());
 		Cluster one =getCluster(map);
 		System.out.println("Determining the ground truth cluster");
-		Cluster two = RandIndexTEST.getCluster(RandIndexTEST.getCluster2(map.keySet()));
+		Cluster two = RandIndex.getCluster(RandIndex.getGroundTruthCluster(map.keySet()));
 		
 		
-		return RandIndexTEST.getRandIndex(one, two);
+		return RandIndex.getRandIndex(one, two);
 	}
 	
 	public static Cluster getCluster(Map<String, Integer> map)

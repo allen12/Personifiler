@@ -10,17 +10,15 @@ import java.util.List;
 
 public class GroundTruth 
 {
-	
-	static List<Person> list = generateList();
+	private static List<Person> list = generateList();
 	
 	private static List<Person> generateList()
 	{
 		List<Person> people = new ArrayList<Person>();
 
 
-		try 
+		try (BufferedReader b = new BufferedReader(new FileReader(new File("people_locator_with521.txt"))) )
 		{
-			BufferedReader b = new BufferedReader(new FileReader(new File("\\\\dom1\\aos\\Public\\Lieberman\\people_locator_with521.txt")));
 			b.readLine();
 
 			String line = b.readLine();
@@ -57,7 +55,7 @@ public class GroundTruth
 				String group = line.substring(index, end);
 				group = group.trim();
 
-				// Find the index of the JHU login
+				// Find the index of the login
 				int indexAt = -1;
 				int indexStart = 0;
 				int indexEnd = 0;
@@ -82,22 +80,17 @@ public class GroundTruth
 
 				Person p = new Person(name, group, ID);
 
-
 				people.add(p);
 
 				line = b.readLine();
 			}
-
-			b.close();
 		} catch (IOException e) 
 		{
-			e.printStackTrace();
+			throw new PersonifilerException(e);
 		}
 		
 		return people;
 	}
-	
-	
 	
 	//Get a list of the ground truth people
 	public static List<Person> getList()
