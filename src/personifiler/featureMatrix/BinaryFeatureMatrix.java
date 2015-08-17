@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import personifiler.cluster.ClusterPeople;
-
 /**
  * 
  * <p> A binary feature matrix represents a binary connection between file owners.
@@ -166,17 +164,4 @@ public class BinaryFeatureMatrix extends FeatureMatrix
 		return s;
 	}
 	
-	public static void main(String[] args)
-	{
-		BinaryFeatureMatrix b = new BinaryFeatureMatrix();
-		
-		b.readFile(new File("C:\\temp\\file-lists\\2014-12-19-14-54-31_VLF_Analysis.txt"));
-		b.calculateFeatureMatrix();
-		
-		System.out.println(b);
-		
-		ClusterPeople c = new ClusterPeople(b.featureMatrix);
-		
-		System.out.println(c.randIndex());
-	}
 }

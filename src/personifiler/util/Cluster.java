@@ -69,23 +69,4 @@ public class Cluster<T>
 
 		return new Cluster<T0>(samePairs, differentPairs);	
 	}
-	
-	/**
-	 * Retrieves a mapping of name-->group from the ground truth list
-	 * 
-	 * @param people A collection of the people's names that need to be retrieved
-	 * @return
-	 */
-	public static Map<String, String> getGroundTruthCluster(Collection<String> people)
-	{
-		Map<String, String> map = new HashMap<>();
-		
-		for (Person p: GroundTruth.getList())
-		{
-			if (people.contains(p.getName()))
-				map.put(p.getName(), p.getGroup());
-		}
-
-		return map;
-	}
 }

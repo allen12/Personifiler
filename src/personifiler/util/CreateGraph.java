@@ -12,6 +12,7 @@ import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 import com.tinkerpop.blueprints.util.io.gml.GMLWriter;
+import com.tinkerpop.blueprints.util.io.graphml.GraphMLWriter;
 
 import personifiler.cluster.ClusterPeople;
 import personifiler.featureMatrix.BinaryFeatureMatrix;
@@ -122,7 +123,7 @@ public class CreateGraph
 		randIndex.setProperty("rand", Double.toString(r));
 	}
 	
-	private void createGML(final String PATH_TO_OUT)
+	public void createGML(final String PATH_TO_OUT)
 	{
 		try {
 			GMLWriter.outputGraph(graph, PATH_TO_OUT);
@@ -131,10 +132,13 @@ public class CreateGraph
 		}
 	}
 	
-	
-	public static void main(String[] args) 
+	public void createGraphML(final String PATH_TO_OUT)
 	{
-		new CreateGraph("C:\\temp\\combine\\combined.txt", "C:/temp/test-graph-binary.gml");
+		try {
+			GraphMLWriter.outputGraph(graph, PATH_TO_OUT);
+		} catch (IOException e) {
+			throw new PersonifilerException(e);
+		}
 	}
 
 }

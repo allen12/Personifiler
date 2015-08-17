@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import personifiler.util.Cluster;
+import personifiler.util.GroundTruth;
 
 
 public class ClusterPeople 
@@ -15,11 +16,11 @@ public class ClusterPeople
 	private PersonMatrix[] matrix;
 	private Map<String, Integer> map; //Clustered map, call cluster()
 	
-	public ClusterPeople(Map<String, double[]> map) //size is the number of people to cluster
+	public ClusterPeople(Map<String, double[]> featureMatrix) 
 	{
 		matrix = new PersonMatrix[map.size()];
 		
-		Iterator<Map.Entry<String, double[]>> iterator = map.entrySet().iterator();
+		Iterator<Map.Entry<String, double[]>> iterator = featureMatrix.entrySet().iterator();
 		
 		for (int i = 0; i < matrix.length; i++)
 		{
@@ -161,7 +162,7 @@ public class ClusterPeople
 		Cluster<String> one = Cluster.transformIntoCluster(map);
 		
 		System.out.println("Determining the ground truth cluster");
-		Cluster<String> two = Cluster.transformIntoCluster(Cluster.getGroundTruthCluster(map.keySet()));
+		Cluster<String> two = Cluster.transformIntoCluster(GroundTruth.getGroundTruthCluster(map.keySet()));
 		
 		return RandIndex.getRandIndex(one, two);
 	}
