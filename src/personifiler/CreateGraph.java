@@ -35,7 +35,7 @@ public class CreateGraph
 	
 	public CreateGraph(String txtFile)
 	{
-		b = new BinaryFeatureMatrixV2();
+		b = new BinaryFeatureMatrix();
 		b.readFile(new File(txtFile));
 		b.calculateFeatureMatrix();
 		c = new ClusterPeople(b.featureMatrix);

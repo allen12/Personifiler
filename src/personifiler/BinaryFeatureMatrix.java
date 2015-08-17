@@ -1,102 +1,79 @@
 package personifiler;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
+/**
+ * 
+ * <p> A binary feature matrix represents a binary connection between file owners.
+ * 
+ * <p> Let a feature matrix be defined as <code> A</code>. The element A_ij can be
+ * either 0 or 1 - 0 if there is no connection, 1 if there is a connection and 0 if there is none.
+ * 
+ * @author Allen Cheng
+ */
 public class BinaryFeatureMatrix extends FeatureMatrix
 {
 	// Sorted list of owners
 	private String[] sortedOwners;
 	
-	
-	@Override
-	public void calculateFeatureMatrix() 
+	/**
+	 * In terms of the feature matrix, two people are connected if they own files
+	 * in the same directory in the file system. Thus, the element A_ij = 1 if
+	 * persons i and j own files in the same folder.
+	 */
+	public void calculateFeatureMatrix()
 	{
-		// Gets a list of all of the owners in the map
-		Set<String> owners = new TreeSet<String>(this.filesAndOwners.values());
+		// Gets a list of all of the owners in the map, sorted
+		List<String> owners = new ArrayList<>(this.filesAndOwners.values());
+		Collections.sort(owners);
+		
 		sortedOwners = new String[owners.size()];
-		int i = 0;
-		for (String owner: owners)
-		{
-			sortedOwners[i] = owner; i++;
-		}
+		for (int i = 0; i < owners.size(); i++)
+			sortedOwners[i] = owners.get(i);
 		
 		// Initializes the featureMatrix map
 		for (String o: owners)
 			this.featureMatrix.put(o, new double[owners.size()]);
 		
-		// Get the folder tree from the filesAndOwners map
-		FolderTree tree = getFolderTree();
+		// Get the file-owner mappings
+		Map<String, Set<String>> mappings = getMappings();
 		
-		// Calculate the feature matrix from the folder tree
-		this.featureMatrix = generateFeatureMatrix(tree.root, this.featureMatrix);
+		// Generate the feature matrix
+		generateFeatureMatrix(mappings);
+		
 	}
 	
-	int gotIt = 0;
-	private Map<String, double[]> generateFeatureMatrix(
-			FolderTree.Folder folder, 
-			Map<String, double[]> matrix)
+	public void generateFeatureMatrix(Map<String, Set<String>> mappings)
 	{
-		// Add the current folder's owner contents into the matrix
-		List<String> owners = folder.owners;
+		List<Set<String>> owners = new ArrayList<Set<String>>(mappings.values());
 		
-		for (String owner: owners)
+		for (Set<String> set: owners)
 		{
-			double[] ownerVector = matrix.get(owner);
-			
-			for (String owner2: owners)
+			for (String owner: set)
 			{
-				int index = find(sortedOwners, owner2);
-				if (gotIt != 8)
+				double[] ownerVector = this.featureMatrix.get(owner);
+				
+				for (String owner2: set)
 				{
-					gotIt++;
-					System.out.println(owner2 + " is " + index);
+					int index = find(sortedOwners, owner2);
+					
+					ownerVector[index] = 1.0;
+					
 				}
-				ownerVector[index] = 1.0;
+				
+				this.featureMatrix.put(owner, ownerVector);
 			}
-			
-			matrix.put(owner, ownerVector);
 		}
-		
-		// Do the same thing for each child of this folder recursively
-		for (FolderTree.Folder f: folder.children)
-			matrix = combineMaps(matrix, generateFeatureMatrix(f, matrix));
-		
-		return matrix;
 	}
 	
-	public static double[] combineArray(double[] one, double[] two)
-	{
-		double[] n = new double[one.length];
-		for (int i = 0; i < one.length; i++)
-		{
-			n[i] = one[i] + two[i];
-			if (n[i] > 1)
-				n[i] = 1;
-		}
-		
-		return n;
-	}
-	
-	public static Map<String, double[]> combineMaps(Map<String, double[]> one, Map<String, double[]> two)
-	{
-		Map<String, double[]> n = new TreeMap<String, double[]>();
-		
-		Iterator<Map.Entry<String, double[]>> iterator = one.entrySet().iterator();
-		while (iterator.hasNext())
-		{
-			Map.Entry<String, double[]> entry = iterator.next();
-			double[] combinedArray = combineArray(entry.getValue(), two.get((String)entry.getKey()));
-			n.put(entry.getKey(), combinedArray);
-		}
-		
-		return n;
-	}
 	
 	/**
 	 * Finds the index of an object o in array
@@ -113,55 +90,56 @@ public class BinaryFeatureMatrix extends FeatureMatrix
 		return -1;
 	}
 	
-	/**
-	 * Gets the folder tree given by the filesAndOwners map.
-	 * Precondition: every key in the map is of the form
-	 * 		"root\\aaa\\bbb\\ccc\\...\\ddd." root must be the
-	 * 		same for each key.
-	 * @return
-	 */
-	private FolderTree getFolderTree()
+	public Map<String, Set<String>> getMappings()
 	{
-		// Construct the root Folder object
-		String rootName = getRoot();
-		FolderTree.Folder root = new FolderTree.Folder(rootName, null);
+		Map<String, Set<String>> mappings = new HashMap<String, Set<String>>();	
 		
-		// Construct the folder tree
-		FolderTree tree = new FolderTree(root);
-		
-		// Iterate through the filesAndOwners map and add them to the folder tree
+		// Iterator for the files and owners map
 		Iterator<Map.Entry<String, String>> iterator = this.filesAndOwners.entrySet().iterator();
+		
+		// Iterate through
 		while (iterator.hasNext())
 		{
-			
 			Map.Entry<String, String> entry = iterator.next();
-			String path = entry.getKey(); String owner = entry.getValue();
+			String filePath = entry.getKey();
+			String ownerName = entry.getValue();
 
-			tree.addFile(path.substring(2), owner);
+			
+			// if the "file" is actually a directory, then create a new mapping
+			if (new File(filePath).isDirectory())
+			{
+				Set<String> set = new HashSet<String>();
+				set.add(ownerName);
+				
+				mappings.put(filePath, set);
+			}
+			
+			// if not, then find its parent and add its owner
+			else
+			{
+				String parent = new File(filePath).getParent();
+				
+				Set<String> set = mappings.get(parent);
+				
+				// if for some reason there is no mapping then create one first
+				if (set == null)
+				{
+					Set<String> newSet = new HashSet<String>();
+					newSet.add(ownerName);
+					
+					mappings.put(parent, newSet);
+					
+					set = mappings.get(parent);
+				}
+				
+				set.add(ownerName);
+				
+				mappings.remove(parent);
+				mappings.put(parent, set);
+			}
 		}
 		
-		return tree;
-	}
-	
-	/**
-	 * 
-	 * @return the String of the root folder given by the first entry of the owners map
-	 */
-	private String getRoot()
-	{
-		Set<String> files = this.filesAndOwners.keySet();
-		
-		Iterator<String> iterator = files.iterator();
-		
-		String rootPath = iterator.next();
-		
-		String[] split = rootPath.split("\\\\");
-		
-		for (String s: split)
-			if (!s.equals(""))
-				return s;
-		
-		return null;
+		return mappings;
 	}
 	
 	public String toString()
@@ -190,7 +168,7 @@ public class BinaryFeatureMatrix extends FeatureMatrix
 	{
 		BinaryFeatureMatrix b = new BinaryFeatureMatrix();
 		
-		b.readFile(new File("C:\\temp\\file-lists\\combined2.txt"));
+		b.readFile(new File("C:\\temp\\file-lists\\2014-12-19-14-54-31_VLF_Analysis.txt"));
 		b.calculateFeatureMatrix();
 		
 		System.out.println(b);
@@ -199,5 +177,4 @@ public class BinaryFeatureMatrix extends FeatureMatrix
 		
 		System.out.println(c.randIndex());
 	}
-
 }

@@ -2,37 +2,44 @@ package personifiler;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
- * Uses a Map<String, Set<String>> to organize files and owners
- * instead of a folder tree as in V1.
  * 
- * @author chenga1
- *
+ * <p> An unbinary feature matrix represents a connection between file owners.
+ * 
+ * <p> Let a feature matrix be defined as <code> A</code>. The element A_ij can be
+ * 0 or any nonzero number, see {@link #calculateFeatureMatrix()}.
+ * 
+ * @author Allen Cheng
  */
-public class BinaryFeatureMatrixV2 extends FeatureMatrix
+public class UnbinaryFeatureMatrix extends FeatureMatrix
 {
-	
 	// Sorted list of owners
 	private String[] sortedOwners;
 	
+	/**
+	 * In terms of the feature matrix, two people are connected if they own files
+	 * in the same directory in the file system. 
+	 * 
+	 * The element A_ij represents the number of directories in which persons i and j
+	 * own files.
+	 */
 	public void calculateFeatureMatrix()
 	{
 		// Gets a list of all of the owners in the map
-		Set<String> owners = new TreeSet<String>(this.filesAndOwners.values());
+		List<String> owners = new ArrayList<>(this.filesAndOwners.values());
+		Collections.sort(owners);
+		
 		sortedOwners = new String[owners.size()];
-		int i = 0;
-		for (String owner: owners)
-		{
-			sortedOwners[i] = owner; i++;
-		}
+		for (int i = 0; i < owners.size(); i++)
+			sortedOwners[i] = owners.get(i);
 		
 		// Initializes the featureMatrix map
 		for (String o: owners)
@@ -60,7 +67,7 @@ public class BinaryFeatureMatrixV2 extends FeatureMatrix
 				{
 					int index = find(sortedOwners, owner2);
 					
-					ownerVector[index] = 1.0;
+					ownerVector[index] += 1.0;
 					
 				}
 				
@@ -85,9 +92,9 @@ public class BinaryFeatureMatrixV2 extends FeatureMatrix
 		return -1;
 	}
 	
-	public Map<String, Set<String>> getMappings()
+	private Map<String, Set<String>> getMappings()
 	{
-		Map<String, Set<String>> mappings = new HashMap<String, Set<String>>();	
+		Map<String, Set<String>> mappings = new HashMap<>();	
 		
 		// Iterator for the files and owners map
 		Iterator<Map.Entry<String, String>> iterator = this.filesAndOwners.entrySet().iterator();
@@ -161,7 +168,7 @@ public class BinaryFeatureMatrixV2 extends FeatureMatrix
 	
 	public static void main(String[] args)
 	{
-		BinaryFeatureMatrixV2 b = new BinaryFeatureMatrixV2();
+		UnbinaryFeatureMatrix b = new UnbinaryFeatureMatrix();
 		
 		b.readFile(new File("C:\\temp\\file-lists\\2014-12-19-14-54-31_VLF_Analysis.txt"));
 		b.calculateFeatureMatrix();
