@@ -80,7 +80,7 @@ public class GroundTruth
 
 				ID = ID.toLowerCase();
 
-				Person p = new Person(name, group, ID);
+				Person p = new Person(name, group);
 
 				people.add(p);
 
