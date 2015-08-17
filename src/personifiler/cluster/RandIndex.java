@@ -19,13 +19,7 @@ public class RandIndex
 {
 	
 	public static <T> double getRandIndex(Cluster<T> one, Cluster<T> two)
-	{
-		System.out.println("Calculating...");
-		System.out.println("first cluster Same pairs size: " + one.getSamePairs().size());
-		System.out.println("first cluster Different pairs size: " + one.getDifferentPairs().size());
-		System.out.println("second cluster Same pairs size: " + two.getSamePairs().size());
-		System.out.println("second cluster Different pairs size: " + two.getDifferentPairs().size());
-		
+	{		
 		int a = 0;
 		int b = 0;
 		int numPairs = one.getSamePairs().size() + one.getDifferentPairs().size();
@@ -44,9 +38,6 @@ public class RandIndex
 				b++;
 
 		}
-
-		System.out.println("a=" + a);
-		System.out.println("b=" + b);
 		
 		return (a+b)/(double)numPairs;
 	}
