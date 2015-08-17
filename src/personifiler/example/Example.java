@@ -9,6 +9,7 @@ import personifiler.featureMatrix.BinaryFeatureMatrix;
 import personifiler.featureMatrix.FeatureMatrix;
 import personifiler.util.Cluster;
 import personifiler.util.CreateGraph;
+import personifiler.util.EmployeeGroundTruth;
 import personifiler.util.GroundTruth;
 
 public class Example
@@ -31,7 +32,8 @@ public class Example
 		Cluster<String> clusteredCluster = Cluster.transformIntoCluster(clustered);
 		
 		// Obtain the ground truth cluster
-		Map<String, String> groundTruthGroups = GroundTruth.getGroundTruthCluster(clustered.keySet());
+		GroundTruth groundTruth = new EmployeeGroundTruth("data/people_locator_with521.txt");
+		Map<String, String> groundTruthGroups = groundTruth.getGroundTruthCluster(clustered.keySet());
 		Cluster<String> groundTruthCluster = Cluster.transformIntoCluster(groundTruthGroups);
 		
 		// Calculate the rand index evaluation
@@ -39,7 +41,7 @@ public class Example
 		System.out.println("rand index: " + randIndex);
 		
 		// Write to a GraphML file
-		CreateGraph createGraph = new CreateGraph(matrix, cluster);
+		CreateGraph createGraph = new CreateGraph(matrix, cluster, groundTruth);
 		createGraph.createGraphML("data/test-graph-binary.graphml");
 	}
 

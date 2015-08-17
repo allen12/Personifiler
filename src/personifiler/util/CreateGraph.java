@@ -1,7 +1,6 @@
 package personifiler.util;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -48,13 +47,14 @@ public class CreateGraph
 	
 	private FeatureMatrix b;
 	private ClusterPeople c;
+	private GroundTruth g;
 	
-	private List<Person> groundTruth = GroundTruth.getList();
 	
-	public CreateGraph(FeatureMatrix b, ClusterPeople c)
+	public CreateGraph(FeatureMatrix b, ClusterPeople c, GroundTruth groundTruth)
 	{
 		this.b = b;
 		this.c = c;
+		this.g = groundTruth;
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public class CreateGraph
 			people[i].setProperty("name", allP[i]);
 			
 			String group = "";
-			for (Person p: groundTruth)
+			for (Person p: g.getGroundTruth())
 				if (p.getName().equals(allP[i]))
 				{
 					group = p.getGroup();
@@ -127,7 +127,7 @@ public class CreateGraph
 		randIndex.setProperty("name", "rand index");
 		randIndex.setProperty("type", "rand index");
 		
-		double r = c.randIndex(); 
+		double r = c.randIndex(g); 
 		
 		randIndex.setProperty("rand", Double.toString(r));
 	}

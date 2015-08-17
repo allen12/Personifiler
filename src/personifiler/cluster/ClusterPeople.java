@@ -150,7 +150,7 @@ public class ClusterPeople
 	 * 
 	 * @return
 	 */
-	public double randIndex()
+	public double randIndex(GroundTruth groundTruth)
 	{
 		if (map == null)
 			cluster();
@@ -159,7 +159,7 @@ public class ClusterPeople
 		Cluster<String> one = Cluster.transformIntoCluster(map);
 		
 //		System.out.println("Determining the ground truth cluster");
-		Cluster<String> two = Cluster.transformIntoCluster(GroundTruth.getGroundTruthCluster(map.keySet()));
+		Cluster<String> two = Cluster.transformIntoCluster(groundTruth.getGroundTruthCluster(map.keySet()));
 		
 		return RandIndex.getRandIndex(one, two);
 	}
