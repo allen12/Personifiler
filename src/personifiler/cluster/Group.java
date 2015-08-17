@@ -1,4 +1,4 @@
-package personifiler;
+package personifiler.cluster;
 
 import java.util.ArrayList;
 
@@ -10,12 +10,22 @@ import java.util.ArrayList;
  */
 public class Group
 {
-	ArrayList<PersonMatrix> members;
-	double[] mean;
+	private ArrayList<PersonMatrix> members;
+	private double[] mean;
 	
 	public Group(ArrayList<PersonMatrix> mems, double[] m)
 	{
 		members = mems;
 		mean = m;
+	}
+	
+	public ArrayList<PersonMatrix> getMembers()
+	{
+		return members;
+	}
+	
+	public double[] getMean()
+	{
+		return mean;
 	}
 }

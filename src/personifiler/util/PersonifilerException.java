@@ -1,4 +1,4 @@
-package personifiler;
+package personifiler.util;
 
 @SuppressWarnings("serial")
 public class PersonifilerException extends RuntimeException

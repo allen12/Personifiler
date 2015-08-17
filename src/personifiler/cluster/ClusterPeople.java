@@ -1,4 +1,4 @@
-package personifiler;
+package personifiler.cluster;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
+
+import personifiler.util.Cluster;
 
 
 public class ClusterPeople 
@@ -77,7 +79,7 @@ public class ClusterPeople
 		for (int i = 0; i < randomIndecies.length; i++)
 		{
 			groups[i] = new Group(new ArrayList<PersonMatrix>(
-				    Arrays.asList(matrix[randomIndecies[i]])), matrix[randomIndecies[i]].matrix);
+				    Arrays.asList(matrix[randomIndecies[i]])), matrix[randomIndecies[i]].getMatrix());
 		}
 		//---------------------------------------------------------------------------------------------------------
 
@@ -91,13 +93,13 @@ public class ClusterPeople
 			for (PersonMatrix person: matrix)
 			{
 				//Find closest centroid
-				double largestDistance = getCosineDistance(person.matrix, temp[0].mean);
+				double largestDistance = getCosineDistance(person.getMatrix(), temp[0].getMean());
 				Group maxGroup = temp[0];
 				int groupNum = 0;
 				for (int i = 0; i < temp.length; i++)
 				{
-					double distance = getCosineDistance(person.matrix, temp[i].mean);
-					System.out.println("Person " + person.name + " has a distance of " + distance + " to group " + i);
+					double distance = getCosineDistance(person.getMatrix(), temp[i].getMean());
+					System.out.println("Person " + person.getName() + " has a distance of " + distance + " to group " + i);
 					if (distance > largestDistance)
 					{
 						largestDistance = distance;
@@ -106,24 +108,24 @@ public class ClusterPeople
 					}
 				}
 				
-				System.out.println("Person " + person.name + " is closest to group " + groupNum);
-				maxGroup.members.add(person);
+				System.out.println("Person " + person.getName() + " is closest to group " + groupNum);
+				maxGroup.getMembers().add(person);
 			}
 			
 			//Recalculate cluster means
 			for (Group group: temp)
 			{
-				for (int i = 0; i < group.mean.length; i++)
+				for (int i = 0; i < group.getMean().length; i++)
 				{
 					double average = 0.0;
-					for (PersonMatrix person: group.members)
+					for (PersonMatrix person: group.getMembers())
 					{
-						average += person.matrix[i];
+						average += person.getMatrix()[i];
 					}
 					
-					average /= group.members.size();
+					average /= group.getMembers().size();
 					
-					group.mean[i] = average;
+					group.getMean()[i] = average;
 				}
 			}
 			
@@ -137,8 +139,8 @@ public class ClusterPeople
 		
 		for (int i = 0; i < groups.length; i++)
 		{
-			for (PersonMatrix person: groups[i].members)
-				map.put(person.name, i);
+			for (PersonMatrix person: groups[i].getMembers())
+				map.put(person.getName(), i);
 		}
 		
 		this.map = map;

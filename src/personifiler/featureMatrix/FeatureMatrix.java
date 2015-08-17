@@ -1,4 +1,4 @@
-package personifiler;
+package personifiler.featureMatrix;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
+
+import personifiler.util.PersonifilerException;
 
 /**
  * <p> Feature matrix object representation. 
@@ -82,5 +84,10 @@ public abstract class FeatureMatrix
 	public Map<String, double[]> getFeatureMatrix()
 	{
 		return featureMatrix;
+	}
+	
+	public Map<String, String> getFilesAndOwners()
+	{
+		return filesAndOwners;
 	}
 }

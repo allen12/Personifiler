@@ -1,4 +1,7 @@
-package personifiler;
+package personifiler.cluster;
+
+import personifiler.util.Cluster;
+import personifiler.util.Pair;
 
 /**
  * 

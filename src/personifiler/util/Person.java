@@ -1,4 +1,4 @@
-package personifiler;
+package personifiler.util;
 
 /**
  * Person is a class representing a file owner.

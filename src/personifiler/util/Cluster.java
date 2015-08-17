@@ -1,4 +1,4 @@
-package personifiler;
+package personifiler.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * 
- * A cluster is a wrapper tool to use with the rand index calculation.
+ * A cluster is a wrapper tool to use with the rand index calculation and clustering.
  * 
  * @author Allen Cheng
  */

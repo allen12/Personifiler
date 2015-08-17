@@ -1,4 +1,4 @@
-package personifiler;
+package personifiler.util;
 
 public class Pair<T>
 {

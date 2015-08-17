@@ -1,10 +1,7 @@
-package personifiler;
+package personifiler.util;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,35 +13,49 @@ import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 import com.tinkerpop.blueprints.util.io.gml.GMLWriter;
 
+import personifiler.cluster.ClusterPeople;
+import personifiler.featureMatrix.BinaryFeatureMatrix;
+import personifiler.featureMatrix.FeatureMatrix;
+
+/**
+ * 
+ * Class that outputs a .gml file
+ * 
+ * @author Allen Cheng
+ */
 public class CreateGraph 
 {
-	Graph graph = new TinkerGraph();
+	private Graph graph = new TinkerGraph();
 	
-	Map<String, Integer> groups;
+	private Map<String, Integer> groups;
 	
-	FeatureMatrix b;
+	private FeatureMatrix b;
 	
-	Vertex[] people;
-	Vertex[] clusters;
-	Edge[] edges;
-	Vertex randIndex;
+	private Vertex[] people;
+	private Vertex[] clusters;
+	private Edge[] edges;
+	private Vertex randIndex;
 	
-	ClusterPeople c;
+	private ClusterPeople c;
 	
-	List<Person> groundTruth = GroundTruth.getList();
+	private List<Person> groundTruth = GroundTruth.getList();
 	
-	public CreateGraph(String txtFile)
+	/**
+	 * 
+	 * @param txtFile The text file to ingest data from
+	 */
+	public CreateGraph(final String in, final String out)
 	{
 		b = new BinaryFeatureMatrix();
-		b.readFile(new File(txtFile));
+		b.readFile(new File(in));
 		b.calculateFeatureMatrix();
-		c = new ClusterPeople(b.featureMatrix);
+		c = new ClusterPeople(b.getFeatureMatrix());
 
 		addNodes();
 		addClusters();
 		addEdges();
-		createGML();
 		
+		createGML(out);
 	}
 	
 	private void addEdges()
@@ -76,9 +87,9 @@ public class CreateGraph
 		}
 	}
 	
-	public void addNodes()
+	private void addNodes()
 	{
-		Set<String> allPeople = new TreeSet<String>(b.filesAndOwners.values());
+		Set<String> allPeople = new TreeSet<String>(b.getFilesAndOwners().values());
 		
 		Object[] allP = allPeople.toArray();
 		
@@ -111,53 +122,19 @@ public class CreateGraph
 		randIndex.setProperty("rand", Double.toString(r));
 	}
 	
-	private void createGML()
+	private void createGML(final String PATH_TO_OUT)
 	{
-		try 
-		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("lol.txt")));
-			BufferedWriter writer2 = new BufferedWriter(new FileWriter(new File("lol2.txt")));
-			
-			Iterator<Map.Entry<String, Integer>> iterator = groups.entrySet().iterator();
-			while (iterator.hasNext())
-			{
-				Map.Entry<String, Integer> entry = iterator.next();
-				writer.write(entry.getKey() + "\t\t" + entry.getValue());
-				writer.newLine();
-				
-				String owner = entry.getKey();
-				for (Person p: groundTruth)
-				{
-					if (owner.equals(p.getName()))
-					{
-						writer2.write(owner + "\t\t" + p.getGroup());
-						writer2.newLine();
-						break;
-					}
-				}
-			}
-			
-			writer.flush();
-			writer.close();
-			writer2.flush();
-			writer2.close();
-			
-		} catch (IOException e) 
-		{
-			throw new PersonifilerException(e);
-		}
-		
 		try {
-			GMLWriter.outputGraph(graph, "C:/temp/test-graph-binary.gml");
+			GMLWriter.outputGraph(graph, PATH_TO_OUT);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new PersonifilerException(e);
 		}
 	}
 	
 	
 	public static void main(String[] args) 
 	{
-		new CreateGraph("C:\\temp\\combine\\combined.txt");
+		new CreateGraph("C:\\temp\\combine\\combined.txt", "C:/temp/test-graph-binary.gml");
 	}
 
 }
