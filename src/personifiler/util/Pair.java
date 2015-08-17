@@ -1,5 +1,13 @@
 package personifiler.util;
 
+/**
+ * Generic Pair object. The two instance variables of this class represent
+ * a pair of some connection.
+ * 
+ * @author Allen Cheng
+ *
+ * @param <T> The type of the two members of the pair
+ */
 public class Pair<T>
 {
 	private T first;
@@ -16,7 +24,7 @@ public class Pair<T>
 	 */
 	public boolean equals(Object other)
 	{
-		if (other instanceof Pair<?> == false)
+		if (other == null || other instanceof Pair<?> == false)
 			return false;
 		
 		@SuppressWarnings("unchecked") //safe cast
@@ -24,14 +32,15 @@ public class Pair<T>
 		
 		if ((first.equals(p.first) && second.equals(p.second)) || (first.equals(p.second) && second.equals(p.first)))
 			return true;
-		
-		return false;
+		else
+			return false;
 	}
 	
 	public String toString()
 	{
 		String string = "";
 		string += first + " and " + second;
+		
 		return string;
 	}
 }

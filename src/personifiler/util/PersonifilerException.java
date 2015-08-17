@@ -1,9 +1,13 @@
 package personifiler.util;
 
+/**
+ * Generic PersoniFiler exception class.
+ * 
+ * @author Allen Cheng
+ */
 @SuppressWarnings("serial")
 public class PersonifilerException extends RuntimeException
 {
-	
 	public PersonifilerException()
 	{
 		super();
