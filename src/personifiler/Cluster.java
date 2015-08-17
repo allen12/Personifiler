@@ -59,7 +59,7 @@ public class Cluster<T>
 					if (groups.get(i).equals(groups.get(j)))
 						samePairs.add(new Pair<T0>(names.get(i), names.get(j)));
 					else
-						samePairs.add(new Pair<T0>(names.get(i), names.get(j)));
+						differentPairs.add(new Pair<T0>(names.get(i), names.get(j)));
 				}
 			}
 		} catch (Exception e) 
