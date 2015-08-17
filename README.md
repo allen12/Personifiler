@@ -1,5 +1,5 @@
 # PersoniFiler
-A technique using the filesystem to compare the collaborative behaviors of people with the groups that they actually belong to
+A technique using the filesystem to compare the collaborative behaviors of company employees with the groups that they actually belong to. Code written in Java.
 Research website: https://sites.google.com/site/clusteringpeople/home
 
 ![picture alt](http://i.imgur.com/F4kuIap.png "Graph of cluster vs. ground truth")
