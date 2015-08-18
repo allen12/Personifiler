@@ -7,8 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
-
 import personifiler.util.PersonifilerException;
 
 /**
@@ -32,12 +30,12 @@ public abstract class FeatureMatrix
 {
 	// Key: the path of the file
 	// Value: the file's owner
-	protected Map<String, String> filesAndOwners = new LinkedHashMap<String, String>();
+	protected Map<String, String> filesAndOwners = new LinkedHashMap<>();
 	
 	// Key: a file owner's name
 	// Value: the feature vector corresponding to that file owner
 	// Therefore, featureMatrix.size() should equal each double[].length
-	protected Map<String, double[]> featureMatrix = new TreeMap<String, double[]>();
+	protected Map<String, double[]> featureMatrix;
 	
 	/**
 	 * Calculates the feature matrix and stores it into the instance
@@ -99,6 +97,9 @@ public abstract class FeatureMatrix
 	
 	public Map<String, double[]> getFeatureMatrix()
 	{
+		if (featureMatrix == null)
+			calculateFeatureMatrix();
+		
 		return featureMatrix;
 	}
 	
