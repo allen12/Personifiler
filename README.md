@@ -19,3 +19,5 @@ The general approach is:
 * Obtain the ground truth groups of the file owners
 * Develop/Use an evaluation metric to compare the results of PersoniFiler's clustering with the ground truth groups
 * Use a graph to visually analyze the differences and the effectiveness of the evaluation metric
+
+Take a look at the example class at ```personifiler.cluster.example.Example``` to get started with implementing your own analysis of a file system. You will likely need to implement your own ```GroundTruth``` representation of the ground truth.
