@@ -53,7 +53,7 @@ public class UnbinaryFeatureMatrix extends FeatureMatrix
 		
 	}
 	
-	public void generateFeatureMatrix(Map<String, Set<String>> mappings)
+	private void generateFeatureMatrix(Map<String, Set<String>> mappings)
 	{
 		List<Set<String>> owners = new ArrayList<Set<String>>(mappings.values());
 		

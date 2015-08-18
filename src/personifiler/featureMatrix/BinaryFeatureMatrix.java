@@ -51,7 +51,7 @@ public class BinaryFeatureMatrix extends FeatureMatrix
 		
 	}
 	
-	public void generateFeatureMatrix(Map<String, Set<String>> mappings)
+	private void generateFeatureMatrix(Map<String, Set<String>> mappings)
 	{
 		List<Set<String>> owners = new ArrayList<Set<String>>(mappings.values());
 		
@@ -90,7 +90,7 @@ public class BinaryFeatureMatrix extends FeatureMatrix
 		return -1;
 	}
 	
-	public Map<String, Set<String>> getMappings()
+	private Map<String, Set<String>> getMappings()
 	{
 		Map<String, Set<String>> mappings = new HashMap<String, Set<String>>();	
 		
@@ -104,7 +104,7 @@ public class BinaryFeatureMatrix extends FeatureMatrix
 			String filePath = entry.getKey();
 			String ownerName = entry.getValue();
 
-			
+			// TODO: Change so that it doesn't require the physical files on the client's machine to check if it's a directory
 			// if the "file" is actually a directory, then create a new mapping
 			if (new File(filePath).isDirectory())
 			{
