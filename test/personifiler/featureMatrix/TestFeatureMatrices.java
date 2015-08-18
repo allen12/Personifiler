@@ -1,11 +1,11 @@
 package personifiler.featureMatrix;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Map;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -14,7 +14,6 @@ import org.junit.Test;
  * 
  * @author Allen Cheng
  */
-@Ignore // for now
 public class TestFeatureMatrices
 {
 	private static File INPUT 	   = new File("testData/sampleFilesAndOwners.txt");
@@ -28,9 +27,10 @@ public class TestFeatureMatrices
 		matrix.calculateFeatureMatrix();
 		
 		Map<String, double[]> featureMatrix = matrix.getFeatureMatrix();
-		
-		assertEquals( new double[]{1.0, 1.0, 1.0}, featureMatrix.get("Person A"));
-		assertEquals( new double[]{1.0, 1.0, 0.0}, featureMatrix.get("Person B"));
-		assertEquals( new double[]{1.0, 0.0, 1.0}, featureMatrix.get("Person C"));
+
+		assertTrue( Arrays.equals(new double[]{1.0, 1.0, 1.0}, featureMatrix.get("Person A") ));
+		assertTrue( Arrays.equals(new double[]{1.0, 1.0, 0.0}, featureMatrix.get("Person B") ));
+		assertTrue( Arrays.equals(new double[]{1.0, 0.0, 1.0}, featureMatrix.get("Person C") ));
 	}
+
 }

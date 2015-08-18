@@ -42,9 +42,7 @@ public class BinaryFeatureMatrix extends FeatureMatrix
 	
 		// Initializes the featureMatrix map
 		for (String o: owners)
-		{
 			this.featureMatrix.put(o, new double[owners.size()]);
-		}
 		
 		// Get the file-owner mappings
 		Map<String, Set<String>> mappings = getMappings();
