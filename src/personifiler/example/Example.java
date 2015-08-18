@@ -9,7 +9,6 @@ import personifiler.featureMatrix.BinaryFeatureMatrix;
 import personifiler.featureMatrix.FeatureMatrix;
 import personifiler.util.Cluster;
 import personifiler.util.CreateGraph;
-import personifiler.util.EmployeeGroundTruth;
 import personifiler.util.GroundTruth;
 
 public class Example

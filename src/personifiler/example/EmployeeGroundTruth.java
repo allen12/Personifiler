@@ -1,4 +1,4 @@
-package personifiler.util;
+package personifiler.example;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,6 +9,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import personifiler.util.GroundTruth;
+import personifiler.util.Person;
+import personifiler.util.PersonifilerException;
 
 public class EmployeeGroundTruth implements GroundTruth
 {
