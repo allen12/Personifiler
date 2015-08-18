@@ -3,10 +3,11 @@ package personifiler.cluster;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
+
+import personifiler.util.TestUtils;
 
 /**
  * Tests for {@link ClusterPeople}
@@ -22,10 +23,7 @@ public class ClusterPeopleTest
 	@Test
 	public void testClustering()
 	{
-		Map<String, double[]> featureMatrix = new HashMap<>();
-		featureMatrix.put("Person A", new double[]{1.0, 3.0, 1.0});
-		featureMatrix.put("Person B", new double[]{3.0, 1.0, 0.0});
-		featureMatrix.put("Person C", new double[]{1.0, 0.0, 1.0});
+		Map<String, double[]> featureMatrix = TestUtils.getSampleFeatureMatrix();
 		
 		ClusterPeople test = new ClusterPeople(featureMatrix);
 		Map<String, Integer> result = test.getClusteredMap();
