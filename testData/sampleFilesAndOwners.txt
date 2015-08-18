@@ -1,0 +1,5 @@
+C:/A/B/C/D.txt	Person A
+C:/A/B/C/DE.txt	Person B
+C:/A/B/C/DEF.txt	Person B
+C:/A/B/C/D/EF.txt	Person A
+C:/A/B/C/D/EFG.txt	Person C
