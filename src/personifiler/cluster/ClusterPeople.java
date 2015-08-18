@@ -21,15 +21,11 @@ public class ClusterPeople
 		matrix = new PersonMatrix[featureMatrix.size()];
 		
 		Iterator<Map.Entry<String, double[]>> iterator = featureMatrix.entrySet().iterator();
-		
 		for (int i = 0; i < matrix.length; i++)
 		{
 			Map.Entry<String, double[]> entry = iterator.next();
-			
 			matrix[i] = new PersonMatrix(entry.getKey(), entry.getValue());
 		}
-		
-		cluster();
 	}
 	
 	/**
@@ -129,7 +125,6 @@ public class ClusterPeople
 			
 			groups = temp.clone();
 		}
-		
 		
 		//-------------------------------------------------------------------------------
 		
