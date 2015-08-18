@@ -73,6 +73,10 @@ public abstract class FeatureMatrix
 			while (r.ready())
 			{
 				String line = r.readLine();
+				
+				if (line == null || line.equals(""))
+					continue;
+				
 				String[] split = line.split(delimiter);
 				
 				filesAndOwners.put(split[0], split[1]);
