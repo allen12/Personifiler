@@ -1,6 +1,0 @@
-File name			Owner Name
-=======================================================
-\\dom1\aos\AOSShare\Projects and Studies\Sandia_QAT			Wickman, Clare Georgianna,
-\\dom1\aos\AOSShare\Projects and Studies\Sandia_QAT\Mission Information Risk Analysis for Cyber Threats.pptx			Wickman, Clare Georgianna,
-\\dom1\aos\AOSShare\Projects and Studies\Sandia_QAT\Thumbs.db			Minch, David Henry,
-\\dom1\aos\AOSShare\Projects and Studies\Sandia_QAT\NC3 Systems  Smart Book 29 Mar 13.pptx			Smith, Douglas Scott,

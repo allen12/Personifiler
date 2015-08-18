@@ -1,4 +1,0 @@
-File name			Owner Name
-=======================================================
-\\dom1\aos\AOSShare\Projects and Studies\VM-Timing			Clemens, John Michael,
-\\dom1\aos\AOSShare\Projects and Studies\VM-Timing\timing.img.gz			Clemens, John Michael,

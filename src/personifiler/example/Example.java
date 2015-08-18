@@ -18,7 +18,7 @@ public class Example
 	{
 		// Ingest the data into a feature matrix
 		FeatureMatrix matrix = new BinaryFeatureMatrix();
-		matrix.readFile(new File("data/file-lists/combined1.txt"), "\t\t\t", 2);
+		matrix.readFile(new File("data/file-lists/example.txt"), "\t");
 		matrix.calculateFeatureMatrix();
 		
 		// Create a ClusterPeople object, used to perform the clustering
@@ -31,7 +31,7 @@ public class Example
 		Cluster<String> clusteredCluster = Cluster.transformIntoCluster(clustered);
 		
 		// Obtain the ground truth cluster
-		GroundTruth groundTruth = new EmployeeGroundTruth("data/people_locator_with521.txt");
+		GroundTruth groundTruth = new EmployeeGroundTruth("data/companyGroups.txt");
 		Map<String, String> groundTruthGroups = groundTruth.getGroundTruthCluster(clustered.keySet());
 		Cluster<String> groundTruthCluster = Cluster.transformIntoCluster(groundTruthGroups);
 		

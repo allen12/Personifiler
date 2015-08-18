@@ -78,7 +78,7 @@ public abstract class FeatureMatrix
 					continue;
 				
 				String[] split = line.split(delimiter);
-				
+
 				filesAndOwners.put(split[0], split[1]);
 			}
 

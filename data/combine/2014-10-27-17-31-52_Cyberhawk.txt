@@ -1,9 +1,0 @@
-File name			Owner Name
-=======================================================
-\\dom1\aos\AOSShare\Projects and Studies\Cyberhawk			DiRossi, Michael Douglas,
-\\dom1\aos\AOSShare\Projects and Studies\Cyberhawk\.DS_Store			Jones, Steven David,
-\\dom1\aos\AOSShare\Projects and Studies\Cyberhawk\Thumbs.db			DiRossi, Michael Douglas,
-\\dom1\aos\AOSShare\Projects and Studies\Cyberhawk\Status Inputs			DiRossi, Michael Douglas,
-\\dom1\aos\AOSShare\Projects and Studies\Cyberhawk\Status Inputs\~$stName CHB Status yyyy-mm-dd.docx			
-\\dom1\aos\AOSShare\Projects and Studies\Cyberhawk\Status Inputs\~$uch CHB Status 2012-10-08.docx			Couch, Jacob Donald,
-\\dom1\aos\AOSShare\Projects and Studies\Cyberhawk\Status Inputs\Thumbs.db			DeStefano, Anthony Joseph,
