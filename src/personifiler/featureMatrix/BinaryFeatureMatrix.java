@@ -2,13 +2,14 @@ package personifiler.featureMatrix;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * 
@@ -32,16 +33,18 @@ public class BinaryFeatureMatrix extends FeatureMatrix
 	public void calculateFeatureMatrix()
 	{
 		// Gets a list of all of the owners in the map, sorted
-		List<String> owners = new ArrayList<>(this.filesAndOwners.values());
-		Collections.sort(owners);
+		Set<String> owners = new TreeSet<>(this.filesAndOwners.values());
 		
 		sortedOwners = new String[owners.size()];
-		for (int i = 0; i < owners.size(); i++)
-			sortedOwners[i] = owners.get(i);
+		sortedOwners = owners.toArray(sortedOwners);
 		
+		this.featureMatrix = new TreeMap<>();
+	
 		// Initializes the featureMatrix map
 		for (String o: owners)
+		{
 			this.featureMatrix.put(o, new double[owners.size()]);
+		}
 		
 		// Get the file-owner mappings
 		Map<String, Set<String>> mappings = getMappings();
