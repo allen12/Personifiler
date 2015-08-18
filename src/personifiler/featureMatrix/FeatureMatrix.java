@@ -21,6 +21,11 @@ import personifiler.util.PersonifilerException;
  * It is up to implementing subclasses to implement the <code>calculateFeatureMatrix</code>
  * method in order to detemrine how to represent this connection.
  * 
+ * <p> The feature matrix implementation in this class is a Map of Strings-->double[]
+ * Each map entry is a String representing the owner's name, and the corresponding double[]
+ * is their feature vector, or a row in the overall feature matrix. Therefore, each entry's
+ * double[].length == featureMatrix.size() should be true because the feature matrix is a square matrix.
+ * 
  * @author Allen Cheng
  */
 public abstract class FeatureMatrix 
@@ -30,12 +35,12 @@ public abstract class FeatureMatrix
 	protected Map<String, String> filesAndOwners = new LinkedHashMap<String, String>();
 	
 	// Key: a file owner's name
-	// Value: the feature vector
+	// Value: the feature vector corresponding to that file owner
 	// Therefore, featureMatrix.size() should equal each double[].length
 	protected Map<String, double[]> featureMatrix = new TreeMap<String, double[]>();
 	
 	/**
-	 * Should calculate the feature matrix and store it into the instance
+	 * Calculates the feature matrix and stores it into the instance
 	 * variable "featureMatrix." Child classes should each have a different
 	 * way of implementing this method.
 	 */
