@@ -18,7 +18,7 @@ public class Example
 	{
 		// Ingest the data into a feature matrix
 		FeatureMatrix matrix = new BinaryFeatureMatrix();
-		matrix.readFile(new File("data/file-lists/combined1.txt"));
+		matrix.readFile(new File("data/file-lists/example.txt"), "\t");
 		matrix.calculateFeatureMatrix();
 		
 		// Create a ClusterPeople object, used to perform the clustering
@@ -31,7 +31,8 @@ public class Example
 		Cluster<String> clusteredCluster = Cluster.transformIntoCluster(clustered);
 		
 		// Obtain the ground truth cluster
-		Map<String, String> groundTruthGroups = GroundTruth.getGroundTruthCluster(clustered.keySet());
+		GroundTruth groundTruth = new EmployeeGroundTruth("data/companyGroups.txt");
+		Map<String, String> groundTruthGroups = groundTruth.getGroundTruthCluster(clustered.keySet());
 		Cluster<String> groundTruthCluster = Cluster.transformIntoCluster(groundTruthGroups);
 		
 		// Calculate the rand index evaluation
@@ -39,7 +40,7 @@ public class Example
 		System.out.println("rand index: " + randIndex);
 		
 		// Write to a GraphML file
-		CreateGraph createGraph = new CreateGraph(matrix, cluster);
+		CreateGraph createGraph = new CreateGraph(matrix, cluster, groundTruth);
 		createGraph.createGraphML("data/test-graph-binary.graphml");
 	}
 

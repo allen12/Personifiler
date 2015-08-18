@@ -1,8 +1,0 @@
-File name			Owner Name
-=======================================================
-\\dom1\aos\AOSShare\Projects and Studies\QWBHP			Henry, Matthew Haven,
-\\dom1\aos\AOSShare\Projects and Studies\QWBHP\slide2Dec2014-v3.pptx			Dalton, Aaron Matthew,
-\\dom1\aos\AOSShare\Projects and Studies\QWBHP\slide2Dec2014.pptx			Henry, Matthew Haven,
-\\dom1\aos\AOSShare\Projects and Studies\QWBHP\BHP Verification Decomposition.pptx			Parker, Kevin Earle,
-\\dom1\aos\AOSShare\Projects and Studies\QWBHP\Thumbs.db			Henry, Matthew Haven,
-\\dom1\aos\AOSShare\Projects and Studies\QWBHP\BHP Project Analysis 13Nov2014.xlsx			Henry, Matthew Haven,

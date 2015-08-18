@@ -42,42 +42,53 @@ public abstract class FeatureMatrix
 	public abstract void calculateFeatureMatrix();
 	
 	/**
+	 * Ingest a text file and stores into the instance variable "filesAndOwners"
+	 * 
+	 * @param txt
+	 * @param delimiter
+	 */
+	public void readFile(File txt, String delimiter)
+	{
+		readFile(txt, delimiter, 0);
+	}
+	
+	/**
 	 * Reads a text file containing file paths and their owners.
 	 * Stores it into the instance variable "filesAndOwners"
 	 * 
-	 * @param txt
+	 * @param txt File to ingest data
+	 * @param delimiter A regular expression of the delimiter between the name and group
+	 * @param skipLines number of header lines to skip
 	 */
-	public void readFile(File txt)
+	public void readFile(File txt, String delimiter, int skipLines)
 	{
-		try (BufferedReader r = new BufferedReader(new FileReader(txt)))
+		if (skipLines < 0)
+			throw new PersonifilerException("skipLines cannot be negative");
+		
+		try (BufferedReader r = new BufferedReader(new FileReader(txt)) )
 		{
-			
-			r.readLine(); // First line is useless
-			r.readLine(); // Second line also useless
-			
+			for (int i = 0; i < skipLines && r.ready(); i++)
+				r.readLine();
+
 			while (r.ready())
 			{
 				String line = r.readLine();
-				String[] split = line.split("\t\t\t");
 				
-				try
-				{
-					filesAndOwners.put(split[0], split[1]);
-				} catch (Exception e) 
-				{
-					 throw new PersonifilerException(e);
-				}
+				if (line == null || line.equals(""))
+					continue;
+				
+				String[] split = line.split(delimiter);
+
+				filesAndOwners.put(split[0], split[1]);
 			}
-			
-			r.close();
-			
+
 		} catch (FileNotFoundException e) 
 		{
 			System.out.println("File not found!");
 			
 		} catch (IOException e) 
 		{
-			e.printStackTrace();
+			throw new PersonifilerException(e);
 		}
 	}
 	

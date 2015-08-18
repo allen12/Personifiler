@@ -1,8 +1,6 @@
 package personifiler.util;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -15,48 +13,60 @@ import com.tinkerpop.blueprints.util.io.gml.GMLWriter;
 import com.tinkerpop.blueprints.util.io.graphml.GraphMLWriter;
 
 import personifiler.cluster.ClusterPeople;
-import personifiler.featureMatrix.BinaryFeatureMatrix;
 import personifiler.featureMatrix.FeatureMatrix;
 
 /**
+ * <p> Class that outputs a GML or GraphML file representing a graph.
  * 
- * Class that outputs a .gml file
+ * <p> The resulting graph implementation contains two types of vertices:
+ * clusters and people
+ * 
+ * <p> Edges are drawn from each person vertex to the cluster vertex that they belong to,
+ * according to the results of the Personifiler clustering. Each person vertex also 
+ * contains their actual ground truth group. This allows analytics to be performed on
+ * the graph visualization, such as in {@link http://i.imgur.com/F4kuIap.png}. 
+ * 
+ * <p>The blue nodes are cluster vertices, the red nodes are person vertices. Each person 
+ * node belongs to some colored region, and all the nodes in a colored region belong to the 
+ * same ground truth group. We can then roughly determine how accurate the Personifiler
+ * clustering is based on whether most of the nodes within a colored region have edges
+ * pointing to the same blue cluster node.
  * 
  * @author Allen Cheng
  */
 public class CreateGraph 
 {
-	private Graph graph = new TinkerGraph();
+	private Graph graph;
 	
 	private Map<String, Integer> groups;
-	
-	private FeatureMatrix b;
 	
 	private Vertex[] people;
 	private Vertex[] clusters;
 	private Edge[] edges;
 	private Vertex randIndex;
 	
+	private FeatureMatrix b;
 	private ClusterPeople c;
+	private GroundTruth g;
 	
-	private List<Person> groundTruth = GroundTruth.getList();
+	
+	public CreateGraph(FeatureMatrix b, ClusterPeople c, GroundTruth groundTruth)
+	{
+		this.b = b;
+		this.c = c;
+		this.g = groundTruth;
+	}
 	
 	/**
-	 * 
-	 * @param txtFile The text file to ingest data from
+	 * Generates a graph, as described in the class documentation.
 	 */
-	public CreateGraph(final String in, final String out)
+	public void generateGraph()
 	{
-		b = new BinaryFeatureMatrix();
-		b.readFile(new File(in));
-		b.calculateFeatureMatrix();
-		c = new ClusterPeople(b.getFeatureMatrix());
-
+		graph = new TinkerGraph();
+		
 		addNodes();
 		addClusters();
 		addEdges();
-		
-		createGML(out);
 	}
 	
 	public CreateGraph(FeatureMatrix b, ClusterPeople c)
@@ -77,7 +87,7 @@ public class CreateGraph
 		{
 			int group = groups.get(people[i].getProperty("name"));
 			
-			edges[i] = graph.addEdge(null, people[i], graph.getVertex(group), "lol");
+			edges[i] = graph.addEdge(null, people[i], graph.getVertex(group), "");
 		}
 	}
 	
@@ -112,7 +122,7 @@ public class CreateGraph
 			people[i].setProperty("name", allP[i]);
 			
 			String group = "";
-			for (Person p: groundTruth)
+			for (Person p: g.getGroundTruth())
 				if (p.getName().equals(allP[i]))
 				{
 					group = p.getGroup();
@@ -127,13 +137,21 @@ public class CreateGraph
 		randIndex.setProperty("name", "rand index");
 		randIndex.setProperty("type", "rand index");
 		
-		double r = c.randIndex(); 
+		double r = c.randIndex(g); 
 		
 		randIndex.setProperty("rand", Double.toString(r));
 	}
-	
+
+	/**
+	 * Outputs a GML file
+	 * 
+	 * @param PATH_TO_OUT
+	 */
 	public void createGML(final String PATH_TO_OUT)
 	{
+		if (graph == null)
+			generateGraph();
+		
 		try {
 			GMLWriter.outputGraph(graph, PATH_TO_OUT);
 		} catch (IOException e) {
@@ -141,8 +159,16 @@ public class CreateGraph
 		}
 	}
 	
+	/**
+	 * Outputs a GraphML file
+	 * 
+	 * @param PATH_TO_OUT
+	 */
 	public void createGraphML(final String PATH_TO_OUT)
 	{
+		if (graph == null)
+			generateGraph();
+
 		try {
 			GraphMLWriter.outputGraph(graph, PATH_TO_OUT);
 		} catch (IOException e) {

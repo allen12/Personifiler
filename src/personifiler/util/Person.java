@@ -9,18 +9,17 @@ public class Person
 {
 	private String name;
 	private String group;
-	private String ID;
 	
-	public Person(String n, String g, String i)
+	public Person(String n, String g)
 	{
-		name = n; group = g; ID = i;
+		name = n; group = g;
 	}
 	
 	public boolean equals(Object p)
 	{
 		Person person = (Person) p;
 		
-		if (name.equals(person.name) && group.equals(person.group) && ID.equals(person.ID))
+		if (name.equals(person.getName() ) && group.equals(person.getGroup() ))
 			return true;
 		
 		return false;
@@ -28,7 +27,7 @@ public class Person
 	
 	public String toString()
 	{
-		return(name + "\t" + group + "\t" + ID);
+		return(name + "\t" + group);
 	}
 	
 	public String getName()
@@ -40,9 +39,5 @@ public class Person
 	{
 		return group;
 	}
-	
-	public String getID()
-	{
-		return ID;
-	}
+
 }
