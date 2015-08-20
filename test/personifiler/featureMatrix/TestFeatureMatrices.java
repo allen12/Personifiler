@@ -32,5 +32,18 @@ public class TestFeatureMatrices
 		assertTrue( Arrays.equals(new double[]{1.0, 1.0, 0.0}, featureMatrix.get("Person B") ));
 		assertTrue( Arrays.equals(new double[]{1.0, 0.0, 1.0}, featureMatrix.get("Person C") ));
 	}
+	
+	@Test
+	public void testUnbinaryFeatureMatrix()
+	{
+		FeatureMatrix matrix = new UnbinaryFeatureMatrix();
+		matrix.readFile(INPUT, DELIMITER);
+		matrix.calculateFeatureMatrix();
+		
+		Map<String, double[]> featureMatrix = matrix.getFeatureMatrix();
 
+		assertTrue( Arrays.equals(new double[]{2.0, 1.0, 1.0}, featureMatrix.get("Person A") ));
+		assertTrue( Arrays.equals(new double[]{1.0, 1.0, 0.0}, featureMatrix.get("Person B") ));
+		assertTrue( Arrays.equals(new double[]{1.0, 0.0, 1.0}, featureMatrix.get("Person C") ));
+	}
 }
