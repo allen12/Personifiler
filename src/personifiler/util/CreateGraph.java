@@ -60,13 +60,15 @@ public class CreateGraph
 	/**
 	 * Generates a graph, as described in the class documentation.
 	 */
-	public void generateGraph()
+	public Graph generateGraph()
 	{
 		graph = new TinkerGraph();
 		
 		addNodes();
 		addClusters();
 		addEdges();
+		
+		return graph;
 	}
 	
 	public CreateGraph(FeatureMatrix b, ClusterPeople c)
